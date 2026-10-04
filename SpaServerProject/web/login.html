@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our TOUCH Wellness SPA - Authentication</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+       1. NAVIGATION BAR (Malaya ang Home, Restricted ang Services/Promos/Book)
+       ========================================================================== -->
+    <nav>
+        <!-- LOGO: Kapag pinindot ito, ididiretso sila sa FB Page sa bagong tab nang hindi nawawala ang system mo -->
+        <a href="https://facebook.com" target="_blank" style="text-decoration: none;">
+            <div class="logo" style="cursor: pointer;">
+                <img src="images/logo.png" alt="Spa Logo" class="nav-logo-img">
+                <div>
+                    Our TOUCH <span>Wellness SPA</span>
+                </div>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <!-- GUEST LINKS SYSTEM OVERVIEW NAVIGATION PANELS -->
+            <li><a id="nav-home" onclick="showGuestHome()">🏠 Home</a></li>
+            <li><a id="nav-serv" onclick="showGuestAlert('Maaari lamang mag-Log In o mag-Sign Up muna upang makita ang aming Services portfolio.')">💆 Services</a></li>
+            <li><a id="nav-promo" onclick="showGuestAlert('Maaari lamang mag-Log In o mag-Sign Up muna upang makita ang aming active Promos.')">🎟️ Promos</a></li>
+            <li><a id="nav-book" onclick="showGuestAlert('Maaari lamang mag-Log In o mag-Sign Up muna upang makapag-book ng appointment sa spa.')">📅 Book Appointment</a></li>
+            <li><a id="nav-account" class="active" onclick="toggleForm('login')">🔑 Account</a></li>
+        </ul>
+    </nav>
+	
+    <!-- SYSTEM ALERTS / CONFIRMATION NOTIFICATION MODAL CONTAINER (May OK at Cancel targets) -->
+    <div id="system-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-box">
+            <div id="sys-modal-icon">✨</div>
+            <h3 id="sys-modal-title">Notification</h3>
+            <p id="sys-modal-text">Mensahe dito...</p>
+            <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+                <button id="sys-modal-ok-btn" class="form-btn" style="margin: 0; width: 110px;">OK</button>
+                <button id="sys-modal-cancel-btn" class="btn-delete" style="margin: 0; width: 110px; background-color: #757575; display: none;">Cancel</button>
+            </div>
+        </div>
+    </div>
+	<!-- ==========================================================================
+	   2. MAIN CONTENT LAYOUT SYSTEM LAYER (Reels Video + Right Column Forms)
+	   ========================================================================== -->
+	<div class="main-layout" style="min-height: 80vh; display: flex; align-items: center; justify-content: center;">
+	  
+	    <div class="home-flex-container" style="width: 100%;">
+
+	        <!-- 🎥 LEFT SIDE: VERTICAL REELS SCREEN CANVAS SLIDER WIDGET -->
+	        <div class="home-video-wrapper reels-mode">
+	            <video id="slider-video" autoplay loop muted playsinline class="home-bg-video">
+	                <source id="video-source" src="images/vid1.mp4" type="video/mp4">
+	                Your browser does not support the video tag.
+	            </video>
+	            <button type="button" class="slider-btn prev" onclick="changeVideo(-1)">❮</button>
+	            <button type="button" class="slider-btn next" onclick="changeVideo(1)">❯</button>
+	        </div>
+
+	        <!-- 📦 RIGHT SIDE: DYNAMIC WORKSPACE PANEL CARD CONTAINERS -->
+	        <div style="flex-grow: 1; max-width: 650px; display: flex; justify-content: center; width: 100%;">
+
+	            <!-- 🏠 TAB A: ENRICHED GUEST HOME VIEW PANEL -->
+	            <div id="guest-home-section" class="form-container" style="display: none; max-width: 100%; padding: 35px 25px;">
+	                
+	                <!-- Welcome CTA Shortcut Banner -->
+	                <div style="text-align: center; width: 100%; margin-bottom: 35px;">
+	                    <h2 style="color: var(--spa-pink); margin-bottom: 15px; font-size: 26px;">Welcome to Our TOUCH Wellness SPA!</h2>
+	                    <p style="margin-bottom: 25px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); font-size: 14.5px;">
+	                        Experience the ultimate relaxation and premium body wellness treat tailored just for you. 
+	                        Upang makita ang aming kumpletong presyo, mga aktibong promo, at makapag-reserve ng iyong slot, mangyaring gumawa ng account o mag-login muna.
+	                    </p>
+	                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 10px;">
+	                        <button type="button" class="form-btn" style="width: auto; padding: 12px 25px;" onclick="toggleForm('login')">🔑 Log In Now</button>
+	                        <button type="button" class="btn-gen" style="width: auto; padding: 12px 25px;" onclick="toggleForm('register')">✨ Create Account</button>
+	                    </div>
+	                </div>
+
+					<!-- ==========================================================================
+					     🪔 2. PREMIUM GUEST AMENITIES MATRIX (Parihaba na Layout - For login.html)
+					     ========================================================================== -->
+					<div style="margin-top: 30px; text-align: center; width: 100%; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 25px;">
+					    <h3 style="color: var(--spa-pink); font-size: 18px; margin-bottom: 20px; font-weight: 700; letter-spacing: 0.5px;">
+					        Corporate Guest Amenities
+					    </h3>
+					    
+					    <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+					        
+					        <!-- Amenity Box 1: Tea -->
+					        <div style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.15); padding: 12px; border-radius: 16px; width: 45%; min-width: 140px; text-align: center;">
+					            <!-- 🚀 PINALITAN: Parisukat/Parihaba na may banayad na kurbang gilid -->
+					            <img src="images/tea.jpg" alt="Herbal Tea" style="width: 100%; height: 85px; object-fit: cover; border-radius: 10px; opacity: 0.95; margin-bottom: 10px;">
+					            <h4 style="font-size: 13px; font-weight: 700; color: #fff;">Herbal Tea</h4>
+					            <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px; line-height: 1.3;">Complimentary warm organic brew.</p>
+					        </div>
+
+					        <!-- Amenity Box 2: Aromatherapy -->
+					        <div style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.15); padding: 12px; border-radius: 16px; width: 45%; min-width: 140px; text-align: center;">
+					            <img src="images/aroma.jpg" alt="Aromatherapy" style="width: 100%; height: 85px; object-fit: cover; border-radius: 10px; opacity: 0.95; margin-bottom: 10px;">
+					            <h4 style="font-size: 13px; font-weight: 700; color: #fff;">Aromatherapy</h4>
+					            <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px; line-height: 1.3;">Essential aromatic oil diffusers.</p>
+					        </div>
+
+					        <!-- Amenity Box 3: Shower -->
+					        <div style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.15); padding: 12px; border-radius: 16px; width: 45%; min-width: 140px; text-align: center;">
+					            <img src="images/shower.jpg" alt="Hot Showers" style="width: 100%; height: 85px; object-fit: cover; border-radius: 10px; opacity: 0.95; margin-bottom: 10px;">
+					            <h4 style="font-size: 13px; font-weight: 700; color: #fff;">Hot Showers</h4>
+					            <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px; line-height: 1.3;">Clean bath cubicles and fresh robes.</p>
+					        </div>
+
+					        <!-- Amenity Box 4: Music -->
+					        <div style="background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255,255,255,0.15); padding: 12px; border-radius: 16px; width: 45%; min-width: 140px; text-align: center;">
+					            <img src="images/music.jpg" alt="Soundscapes" style="width: 100%; height: 85px; object-fit: cover; border-radius: 10px; opacity: 0.95; margin-bottom: 10px;">
+					            <h4 style="font-size: 13px; font-weight: 700; color: #fff;">Soundscapes</h4>
+					            <p style="font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 4px; line-height: 1.3;">Nature relaxation soundtracks.</p>
+					        </div>
+
+					    </div>
+					</div>
+
+
+
+	                <!-- 💡 SUGHESTIYON #2: INERACTIVE FAQ ACCORDION SUMMARY DROPDOWNS -->
+	                <div style="margin-top: 35px; text-align: left; width: 100%; border-top: 1px dashed rgba(255,255,255,0.15); padding-top: 25px;">
+	                    <h3 style="color: var(--spa-pink); font-size: 18px; text-align: center; margin-bottom: 20px; font-weight: 700;">💡 Frequently Asked Questions</h3>
+	                    <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+	                        <details style="background: rgba(255, 255, 255, 0.08); padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
+	                            <summary style="font-weight: 600; color: #fff; font-size: 13.5px; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+	                                <span>🚶 Tumatanggap ba kayo ng walk-in options?</span>
+	                                <span style="color: var(--spa-pink); font-size: 10px;">▼</span>
+	                            </summary>
+	                            <p style="margin-top: 8px; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.5; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px;">
+	                                Mas inirerekumenda namin na mag-book online gamit ang user dashboard account upang masiguro ang iyong slots. Ang walk-ins ay subject to availability.
+	                            </p>
+	                        </details>
+	                        <details style="background: rgba(255, 255, 255, 0.08); padding: 12px 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer;">
+	                            <summary style="font-weight: 600; color: #fff; font-size: 13.5px; outline: none; list-style: none; display: flex; justify-content: space-between; align-items: center;">
+	                                <span>💵 Ano ang paraan ng pagbabayad sa shop?</span>
+	                                <span style="color: var(--spa-pink); font-size: 10px;">▼</span>
+	                            </summary>
+	                            <p style="margin-top: 8px; font-size: 12.5px; color: rgba(255,255,255,0.85); line-height: 1.5; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px;">
+	                                Tinatanggap namin ang Cash, GCash, Maya, at major Credit Cards na direktang pinoproseso sa aming main front-desk check-out counter.
+	                            </p>
+	                        </details>
+	                    </div>
+	                </div>
+	            </div> <!-- Pang-sara ng guest-home-section -->
+				<!-- 🔑 TAB B: SYSTEM LOG IN FORM CARD BLOCK (Naka-open sa simula) -->
+				            <div class="form-container" id="login-section" style="max-width: 100%;">
+				                <h2>Welcome Please Log In</h2>
+				                <form id="loginForm">
+				                    <div class="form-group">
+				                        <label>Username</label>
+				                        <input type="text" id="login-username" name="username" placeholder="I-type ang Username" required>
+				                    </div>
+				                    <div class="form-group">
+				                        <label>Password</label>
+				                        <!-- Wrapper container para pumasok ang SHOW/HIDE text sa loob ng input field -->
+				                        <div class="password-toggle-wrapper" style="position: relative; width: 100%;">
+				                            <input type="password" id="login-password" name="password" placeholder="I-type ang Password" required style="padding-right: 65px;">
+				                            <span id="toggle-password-btn" onclick="togglePasswordVisibility()" style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); cursor: pointer; font-size: 11px; font-weight: 700; user-select: none; z-index: 5; color: var(--spa-pink); letter-spacing: 0.5px;">
+				                                SHOW
+				                            </span>
+				                        </div>
+				                    </div>
+				                    
+				                    <!-- FORGOT PASSWORD LINK SHORTCUT -->
+				                    <div style="text-align: right; margin-top: -15px; margin-bottom: 20px;">
+				                        <a onclick="document.getElementById('recovery-modal').style.display='flex'" style="color: var(--spa-pink); font-size: 13px; font-weight: 600; cursor: pointer; text-decoration: underline;">
+				                            Forgot Password?
+				                        </a>
+				                    </div>
+
+				                    <button type="submit" class="form-btn">Log In</button>
+				                </form>
+				                <p class="form-toggle-text">
+				                    Don't have an account yet? <a onclick="toggleForm('register')">Sign Up here</a>
+				                </p>
+				            </div>
+
+				            <!-- 📝 TAB C: REGISTER FORM CARD VIEW (Nakatago sa simula) -->
+				            <div class="form-container" id="register-section" style="display: none; max-width: 100%;">
+				                <h2>Create Account</h2>
+				                <form id="registerForm">
+				                    <div class="form-group">
+				                        <label>Username</label>
+				                        <input type="text" id="reg-username" name="username" placeholder="Pumili ng Username" required>
+				                    </div>
+				                    <div class="form-group">
+				                        <label>Contact No.</label>
+				                        <input type="text" id="reg-contact" name="contact" placeholder="11-digit Contact No." required>
+				                    </div>
+				                    <div class="form-group">
+				                        <label>Password</label>
+				                <input type="password" id="reg-password" name="password" placeholder="Gumawa ng Password" required>
+				            </div>
+				            <div class="form-group">
+				                <label>Confirm Password</label>
+				                <input type="password" id="reg-confirm-password" name="confirmPassword" placeholder="I-type muli ang Password" required>
+				            </div>
+				            <button type="submit" class="form-btn" style="background-color: var(--spa-gold);">Sign Up</button>
+				        </form>
+				        <p class="form-toggle-text">
+				            Already have an account? <a onclick="toggleForm('login')">Log In here</a>
+				        </p>
+				    </div>
+
+				        </div> <!-- Pang-sara ng right column area workspace element link -->
+				    </div> <!-- Pang-sara ng home-flex-container -->
+				</div> <!-- Pang-sara ng main-layout wrapper -->
+				<!-- ==========================================================================
+				       4. ACCOUNT RECOVERY MODAL CARD & INLINE PAGE NAVIGATION ROUTERS
+				       ========================================================================== -->
+				    <div id="recovery-modal" class="modal-overlay" style="display: none; z-index: 100;">
+				        <div class="form-container" style="max-width: 400px; padding: 30px; position: relative;">
+				            <!-- X button para isara ang recovery window popup -->
+				            <span onclick="document.getElementById('recovery-modal').style.display='none'" style="position: absolute; right: 20px; top: 15px; cursor: pointer; color: var(--spa-pink); font-weight: bold; font-size: 20px;">&times;</span>
+				            
+				            <h2 style="color: var(--spa-pink); font-size: 22px; margin-bottom: 15px;">Account Recovery</h2>
+				            <p style="color: rgba(255,255,255,0.8); font-size: 13px; margin-bottom: 20px; text-align: center;">
+				                I-type ang iyong Username at ang eksaktong 11-digit Contact Number na iyong ipinagrehistro upang makuha ang iyong password mula sa database.
+				            </p>
+				            
+				            <form id="recoveryForm">
+				                <div class="form-group">
+				                    <label>Username</label>
+				                    <input type="text" id="rec-username-input" placeholder="I-type ang Username" required>
+				                </div>
+				                <div class="form-group">
+				                    <label>Registered Contact No.</label>
+				                    <input type="text" id="rec-contact-input" placeholder="Halimbawa: 09123456789" required maxlength="11">
+				                </div>
+				                <button type="submit" class="form-btn" style="margin-top: 10px;">Retrieve Password</button>
+				            </form>
+				        </div>
+				    </div>
+
+				    <!-- CONNECTION VECTOR LINK FILE TO JS CORE LOGIC PATH ENGINES -->
+				    <script src="/js/script.js"></script>
+				    <script>
+				        // Mabilis na restricted notification modal para sa mga tab links sa taas kapag hindi pa nakalogin
+				        function showGuestAlert(msg) {
+				            if(typeof showSystemAlert === 'function') {
+				                showSystemAlert(msg, "Access Restriction", "🔒");
+				            } else {
+				                alert(msg);
+				            }
+				        }
+
+				        // Taga-bukas ng marketing welcome layout content area kapag klik si Home tab sa taas
+				        function showGuestHome() {
+				            document.getElementById('guest-home-section').style.display = 'block';
+				            document.getElementById('login-section').style.display = 'none';
+				            document.getElementById('register-section').style.display = 'none';
+				            document.getElementById('nav-home').classList.add('active');
+				            document.getElementById('nav-account').classList.remove('active');
+				        }
+
+				        // Taga-override ng script toggles para isara ang Home card kung magpapalit pabalik sa Forms panel
+				        const originalToggleForm = window.toggleForm;
+				        window.toggleForm = function(formType) {
+				            document.getElementById('guest-home-section').style.display = 'none';
+				            const loginForm = document.getElementById('login-section');
+				            const registerForm = document.getElementById('register-section');
+				            
+				            if (formType === 'register') {
+				                if(loginForm) loginForm.style.display = 'none';
+				                if(registerForm) registerForm.style.display = 'block';
+				                document.getElementById('nav-account').classList.add('active');
+				                document.getElementById('nav-home').classList.remove('active');
+				            } else {
+				                if(loginForm) loginForm.style.display = 'block';
+				                if(registerForm) registerForm.style.display = 'none';
+				                document.getElementById('nav-account').classList.add('active');
+				                document.getElementById('nav-home').classList.remove('active');
+				            }
+				        }
+				    </script>
+				</body>
+				</html>

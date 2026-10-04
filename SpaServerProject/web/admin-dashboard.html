@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our TOUCH Wellness SPA - Admin Registry Panel</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .admin-sub-tab { display: none; margin-top: 20px; }
+        .active-tab { display: block; }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(58, 34, 41, 0.4); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 9999;
+        }
+    </style>
+</head>
+<body>
+	
+	<!-- CUSTOM SYSTEM CONFIRM MODAL POPUP (Para sa Secure Controls Confirmation) -->
+	<div id="system-modal" class="modal-overlay" style="display: none;">
+	    <div class="modal-box">
+	        <div id="sys-modal-icon" style="font-size: 50px; margin-bottom: 10px;">❓</div>
+	        <h3 id="sys-modal-title" style="color: var(--spa-magenta); margin-bottom: 10px; font-size: 22px;">Confirmation</h3>
+	        <p id="sys-modal-text" style="color: var(--spa-dark); margin-bottom: 20px; font-size: 15px;">Mensahe ng kumpirmasyon...</p>
+	        <div style="display: flex; gap: 10px;">
+	            <button id="sys-modal-ok-btn" class="form-btn" style="width: 50%;">Confirm/Yes</button>
+	            <button id="sys-modal-cancel-btn" class="form-btn btn-delete" style="width: 50%; padding: 0;">Cancel</button>
+	        </div>
+	    </div>
+	</div>
+
+
+    <!-- ==========================================================================
+       PERMANENTENG NAVBAR (Mananatili sa itaas para sa Secure Admin Module)
+       ========================================================================== -->
+    <nav>
+        <div class="logo">Our TOUCH <span>Wellness SPA</span></div>
+        <ul class="nav-links">
+            <li><a class="active" style="border-bottom: 2px solid var(--spa-gold); color: var(--spa-gold);">🛡️ Secure Admin Control Registry Server Panel</a></li>
+			<li>
+			    <a href="#" onclick="confirmUserLogout(event)" style="color: #c62828 !important; font-weight: 700; border-left: 2px solid #e0d0d5; padding-left: 15px; margin-left: 5px;">
+			        🚪 Log Out
+			    </a>
+			</li>
+        </ul>
+    </nav>
+
+	<!-- PANGUNAHING PANEL NG ADMIN -->
+	<div class="crud-container" style="max-width: 1000px; margin: 30px auto;">
+	    <div class="crud-header">
+	        <h2>👮 System Management Control Center</h2>
+	        <div class="db-status" id="db-counter">Database Connected</div>
+	    </div>
+	    
+	    <h3>Mga Sangay ng Admin Flowchart Control:</h3>
+	    <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+	        <button class="btn-add" onclick="showAdminTab('admin-users')">👥 User Approved / List</button>
+	        <button class="btn-gen" onclick="showAdminTab('admin-schedules')">📅 Schedules Monitoring</button>
+	        <button class="btn-edit" style="background-color: #1565c0;" onclick="showAdminTab('admin-services')">💆 Portfolio/Services Manage</button>
+	        <button class="btn-gen" style="background-color: #111; color: #0f0; font-family: monospace;" onclick="showAdminTab('admin-audit-logs')">💻 Audit Logs</button>
+	    </div>
+	    
+	    <hr style="border: 1px solid #ddd; margin: 20px 0;">
+
+	    <!-- TAB 1: USER APPROVED / LIST -->
+	    <div id="admin-users" class="admin-sub-tab">
+	        <h3>Registered User Accounts</h3>
+	        
+	        <!-- 🚀 1. IDINAGDAG: SEARCH BAR PARA SA CUSTOMER ACCOUNTS -->
+	        <div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+	            <input type="text" id="search-users-input" onkeyup="filterAdminUsers()" placeholder="🔍 Maghanap ng Username o Contact No..." style="padding: 10px 15px; width: 100%; max-width: 320px; border: 1px solid #ccc; border-radius: 8px; outline: none; font-size: 14px;">
+	        </div>
+
+	        <table>
+	            <thead>
+	                <tr>
+	                    <th>Username</th>
+	                    <th>Contact No.</th>
+	                    <th>Status</th>
+	                    <th>Aksyon</th>
+	                </tr>
+	            </thead>
+	            <tbody id="users-table-body">
+	                <tr><td colspan="4" style="text-align:center; color:gray;">Kinukuha ang data sa database...</td></tr>
+	            </tbody>
+	        </table>
+	    </div>
+
+		<!-- TAB 2: SCHEDULES MONITORING BRANCH -->
+		<div id="admin-schedules" class="admin-sub-tab">
+		    <div class="crud-header" style="margin-bottom: 15px;">
+		        <h3>Active Spa Appointments</h3>
+		        <button class="btn-add" onclick="openBookingForm()">➕ Add New Appointment</button>
+		    </div>
+		    
+		    <!-- 🚀 2. IDINAGDAG: SEARCH BAR PARA SA APPOINTMENTS -->
+		    <div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+		        <input type="text" id="search-schedules-input" onkeyup="filterAdminSchedules()" placeholder="🔍 Maghanap ng Client Name, Booking ID, o Service..." style="padding: 10px 15px; width: 100%; max-width: 320px; border: 1px solid #ccc; border-radius: 8px; outline: none; font-size: 14px;">
+		    </div>
+
+		    <table>
+		        <thead>
+		            <tr>
+		                <th>ID</th>
+		                <th>Customer</th>
+		                <th>Date & Time</th>
+		                <th>Service Type</th>
+		                <th>Promo Applied</th>
+		                <th>Status Control State</th> 
+		            </tr>
+		        </thead>
+		        <tbody id="table-body">
+		            <tr><td colspan="6" style="text-align:center; color:gray;">Kinukuha ang data sa database...</td></tr>
+		        </tbody>
+		    </table>
+		</div>
+
+
+
+		<!-- ==========================================================================
+		           TAB 3: PORTFOLIO / SERVICES MANAGEMENT BRANCH
+		           ========================================================================== -->
+		        <div id="admin-services" class="admin-sub-tab">
+		            <div class="crud-header" style="margin-bottom: 15px;">
+		                <h3>Manage Spa Menu Services</h3>
+		                <button class="btn-add" onclick="openServiceModal()">💆 Add New Service</button>
+		            </div>
+					
+					<!-- 🚀 SEARCH INPUT PARA SA SPA SERVICES MENU -->
+					<div style="margin-bottom: 15px; display: flex; justify-content: flex-end;">
+					    <input type="text" id="search-services-input" onkeyup="filterAdminServices()" placeholder="🔍 Maghanap ng Serbisyo o Presyo..." style="padding: 10px 15px; width: 100%; max-width: 320px; border: 1px solid #ccc; border-radius: 8px; outline: none; font-size: 14px;">
+					</div>
+
+		            <table>
+		                <thead>
+		                    <tr>
+		                        <th>Service Package Name</th>
+		                        <th>Price</th>
+		                        <th>Status State</th>
+		                        <th>Aksyon Control</th>
+		                    </tr>
+		                </thead>
+		                <tbody id="services-table-body">
+		                    <tr><td colspan="4" style="text-align:center; color:gray;">Kinukuha ang data sa database...</td></tr>
+		                </tbody>
+		            </table>
+		        </div>
+
+		        <!-- ==========================================================================
+		           TAB 4: TERMINAL AUDIT LOGS BRANCH
+		           ========================================================================== -->
+		        <div id="admin-audit-logs" class="admin-sub-tab">
+		            <h3>System Audit Trail Logs</h3>
+		            <table style="background-color: #111;">
+		                <thead>
+		                    <tr>
+		                        <th style="background-color: #222; color: #0f0; font-family: monospace; width: 25%;">Timestamp</th>
+		                        <th style="background-color: #222; color: #0f0; font-family: monospace;">Activity Log Message</th>
+		                    </tr>
+		                </thead>
+		                <tbody id="audit-table-body" style="color: #0f0; font-family: 'Courier New', monospace;">
+		                    <tr><td colspan="2">[SYSTEM] Reading audit entries trail stream...</td></tr>
+		                </tbody>
+		            </table>
+		        </div>
+
+		        <!--<br><br>
+		        <button class="btn-delete" onclick="window.location.href='/login.html'">🚪 Log Out Server</button> -->
+		    </div>
+
+		    <!-- ==========================================================================
+		       5. POPUP FORMS MODALS OVERLAYS (Base sa code structure mo)
+		       ========================================================================== -->
+		    
+		    <!-- MODAL A: SPA MENU SERVICE ADD / EDIT EDITOR FORM -->
+		    <div id="service-form-box" class="modal-overlay" style="display: none;">
+		        <div class="form-container" style="margin: 0;">
+		            <h2 id="service-form-title">Add New Spa Service</h2>
+		            <form id="adminServiceForm">
+		                <input type="hidden" id="service-id" name="serviceId">
+		                <div class="form-group">
+		                    <label>Service Name</label>
+		                    <input type="text" id="service-name-input" name="serviceName" required placeholder="Hal. Swedish Massage">
+		                </div>
+		                <div class="form-group">
+		                    <label>Price (₱)</label>
+		                    <input type="number" id="service-price-input" name="servicePrice" required placeholder="Hal. 500">
+		                </div>
+		                <div class="form-group">
+		                    <label>Description</label>
+		                    <input type="text" id="service-desc-input" name="serviceDesc" placeholder="Mabilis na deskripsyon...">
+		                </div>
+		                <div style="display: flex; gap: 10px;">
+		                    <button type="submit" class="form-btn" style="width: 70%;">Save Portfolio</button>
+		                    <button type="button" class="form-btn btn-delete" style="width: 30%; padding: 0;" onclick="closeServiceForm()">Cancel</button>
+		                </div>
+		            </form>
+		        </div>
+		    </div>
+
+		    <!-- MODAL B: APPOINTMENT ADD / EDIT EDITOR FORM -->
+		    <div id="booking-form-box" class="modal-overlay" style="display: none;">
+		        <div class="form-container" style="margin: 0;">
+		            <h2 id="form-title">Add New Appointment</h2>
+		            <form id="adminBookingForm">
+		                <input type="hidden" id="booking-id" name="bookingId">
+		                <div class="form-group">
+		                    <label>Customer Name</label>
+		                    <input type="text" id="cust-name" name="customerName" required placeholder="Pangalan ng Kustomer">
+		                </div>
+		                <div class="form-group">
+		                    <label>Appointment Date</label>
+		                    <input type="date" id="serv-date" name="appointmentDate" required>
+		                </div>
+		                <div class="form-group">
+		                    <label>Select Service</label>
+		                    <select id="serv-type" name="serviceType">
+		                        <!-- Dynamic options via JS -->
+		                    </select>
+		                </div>
+		                <div class="form-group">
+		                    <label>Promo Applied</label>
+		                    <select id="promo-type" name="promoType">
+		                        <option value="Regular Rate">Regular Rate</option>
+		                        <option value="Couple Package Disc.">Couple Package Disc.</option>
+		                        <option value="Early Bird (1PM - 5PM)">Early Bird (1PM - 5PM)</option>
+		                    </select>
+		                </div>
+		                <div class="form-group" id="admin-status-group" style="display: none;">
+		                    <label>Appointment Status</label>
+		                    <select id="admin-status-select" name="status">
+		                        <option value="Active">Active</option>
+		                        <option value="Completed">Completed</option>
+		                        <option value="Cancelled">Cancelled</option>
+		                    </select>
+		                </div>
+		                <div style="display: flex; gap: 10px;">
+		                    <button type="submit" class="form-btn" style="width: 70%;">Save Appointment</button>
+		                    <button type="button" class="form-btn btn-delete" style="width: 30%; padding: 0;" onclick="closeForm()">Cancel</button>
+		                </div>
+		            </form>
+		        </div>
+		    </div>
+
+		    <script src="/js/script.js"></script>
+		    <script>
+		        function showAdminTab(tabId) {
+		            document.querySelectorAll('.admin-sub-tab').forEach(t => t.style.display = 'none');
+		            const activeTab = document.getElementById(tabId);
+		            if(activeTab) {
+		                activeTab.style.display = 'block';
+		            }
+		            
+		            // Dito mangyayari ang pagtawag sa JavaScript AJAX functions
+		            if(tabId === 'admin-users' && typeof loadAdminUsers === 'function') loadAdminUsers();
+		            if(tabId === 'admin-schedules' && typeof loadAdminSchedules === 'function') loadAdminSchedules();
+		            if(tabId === 'admin-services' && typeof loadAdminServices === 'function') loadAdminServices();
+		            if(tabId === 'admin-audit-logs' && typeof loadAdminAuditLogs === 'function') loadAdminAuditLogs();
+		        }
+
+		        function openServiceModal() { document.getElementById('service-form-box').style.display = 'flex'; document.getElementById('service-id').value = ""; document.getElementById('adminServiceForm').reset(); }
+		        function closeServiceForm() { document.getElementById('service-form-box').style.display = 'none'; }
+		        function openBookingForm() { document.getElementById('booking-form-box').style.display = 'flex'; document.getElementById('booking-id').value = ""; document.getElementById('adminBookingForm').reset(); document.getElementById('admin-status-group').style.display = "none"; }
+		        function closeForm() { document.getElementById('booking-form-box').style.display = 'none'; }
+
+		        document.addEventListener("DOMContentLoaded", () => {
+		            showAdminTab('admin-users');
+		        });
+		    </script>
+		</body>
+		</html>

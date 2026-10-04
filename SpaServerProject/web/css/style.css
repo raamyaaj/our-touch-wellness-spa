@@ -1,0 +1,365 @@
+/* ==========================================================================
+   💖 PART 1: GLOBAL CONFIGURATION & BRIGHT LOGO-FIRST OVERLAY (FIXED CONTRAST)
+   ========================================================================== */
+:root { 
+    --spa-magenta: #C2185B;       /* The official vibrant Magenta of the spa */
+    --spa-dark-wine: #3A2229;     /* Deep Burgundy used strictly for text and button hovers */
+    --spa-pink-glow: #F48FB1;     /* Soft pink for custom accents and focus rings */
+    --text-mint-cream: #3A2229;   /* CHANGED: Dark Wine color for base text so it is ultra-clear on a light bg */
+    --text-dark-slate: #2D1F23;   /* For clear contrast inside white tables and inputs */
+    
+    /* Premium Translucent Frosted Glass Layers Setup */
+    --frosted-magenta-bg: linear-gradient(135deg, rgba(194, 24, 91, 0.70), rgba(58, 34, 41, 0.75)); 
+    --border-glass-glow: rgba(255, 255, 255, 0.35);
+}
+
+* { 
+    margin: 0; padding: 0; box-sizing: border-box; 
+    font-family: 'Segoe UI', Arial, sans-serif; 
+}
+
+body {
+    color: var(--text-mint-cream); 
+    min-height: 100vh;
+    position: relative;
+    background-color: #FFF0F3 !important; /* CHANGED: Clean, soft pinkish-white fallback base */
+    
+    /* Pulls your logo.png straight from your secure root repository images path */
+    background-image: url('../images/logo.png') !important; 
+    background-repeat: no-repeat !important;
+    background-position: center center !important; 
+    background-attachment: fixed !important;        
+    background-size: contain !important;           
+}
+
+body::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important; left: 0 !important;
+    width: 100% !important; height: 100% !important;
+    
+    /* 🔥 FIXED: Replaced the dark shroud with a bright, luxurious premium tint layer. 
+       This makes the logo pop beautifully while keeping form fields easily readable! */
+    background: rgba(255, 240, 243, 0.82) !important; 
+    
+    /* Elegant glassmorphism soft-blur filter response */
+    backdrop-filter: blur(1px) !important; 
+    -webkit-backdrop-filter: blur(1px) !important;
+    z-index: -1 !important; 
+}
+
+/* ==========================================================================
+   🧭 PART 2: STYLISH NAVBAR & DYNAMIC LOGO ICON WIDGET
+   ========================================================================== */
+nav { 
+    background-color: rgba(255, 255, 255, 0.96); 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 15px 8%; 
+    box-shadow: 0 4px 20px rgba(194, 24, 91, 0.12); 
+    position: sticky; top: 0; z-index: 1000; 
+}
+
+.logo {
+    display: flex !important;
+    align-items: center !important; 
+    gap: 12px !important;           
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--spa-magenta) !important;
+}
+
+.logo span { color: var(--spa-pink-glow) !important; font-size: 14px; font-weight: 600; display: block; }
+
+.nav-logo-img {
+    display: inline-block !important;
+    width: 42px !important;          
+    height: 42px !important;         
+    object-fit: contain !important;  
+    vertical-align: middle !important;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.logo:hover .nav-logo-img {
+    transform: scale(1.12) rotate(3deg); /* Uuga nang bahagya kapag hinover */
+}
+
+.nav-links { list-style: none; display: flex; gap: 25px; }
+.nav-links a { text-decoration: none; color: var(--text-dark-slate); font-weight: 600; cursor: pointer; transition: 0.25s ease; }
+.nav-links a:hover, .nav-links a.active { color: var(--spa-magenta) !important; border-bottom: 2px solid var(--spa-magenta); }
+
+.main-layout {
+    display: flex !important;          
+    flex-direction: column;            
+    justify-content: center !important; 
+    align-items: center !important;     
+    min-height: calc(100vh - 85px);    
+    width: 100%;                       
+    padding: 20px;                     
+}
+/* ==========================================================================
+   🔒 PART 3: TRANSPARENT PREMIUM FROSTED FORMS (Login & Register Portal)
+   ========================================================================== */
+.form-container {
+    /* Ang iyong orihinal na premium setup: linear-gradient(135deg, Magenta-0.60, Burgundy-0.65) */
+    background: linear-gradient(135deg, rgba(194, 24, 91, 0.60), rgba(58, 34, 41, 0.65)) !important; 
+    
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    width: 100%;
+    max-width: 440px;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 15px 35px rgba(58, 34, 41, 0.35) !important;
+    border: 1px solid var(--border-glass-glow) !important; 
+    animation: smoothFade 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes smoothFade { 
+    from { opacity: 0; transform: translateY(18px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+.form-container h2 { 
+    text-align: center; 
+    color: var(--spa-pink-glow) !important; 
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    margin-bottom: 30px; 
+    font-weight: 700;
+}
+
+.form-group { margin-bottom: 22px; text-align: left; }
+.form-group label { 
+    display: block; 
+    margin-bottom: 8px; 
+    font-weight: 600; 
+    color: rgba(255, 255, 255, 0.95) !important; 
+}
+
+.form-group input, .form-group select { 
+    width: 100%; 
+    padding: 13px; 
+    border: 1px solid var(--border-glass-glow) !important; 
+    border-radius: 12px; 
+    background: rgba(255, 255, 255, 0.95); 
+    outline: none; 
+    font-size: 15px;
+    color: var(--text-dark-slate);
+    transition: 0.25s all;
+}
+
+.form-group input:focus, .form-group select:focus { 
+    background: #ffffff;
+    border-color: var(--spa-pink-glow) !important; 
+    box-shadow: 0 0 12px rgba(244, 143, 177, 0.5) !important; 
+}
+
+.form-btn { 
+    width: 100%; 
+    background-color: var(--spa-magenta); 
+    color: white; 
+    border: none; 
+    padding: 14px; 
+    border-radius: 12px; 
+    font-weight: 700; 
+    cursor: pointer; 
+    transition: 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    font-size: 16px; 
+}
+
+.form-btn:hover { 
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 20px rgba(194, 24, 91, 0.4); 
+}
+
+.form-toggle-text { 
+    text-align: center; 
+    margin-top: 20px; 
+    font-size: 14px; 
+    color: rgba(255, 255, 255, 0.8) !important; 
+}
+
+.form-toggle-text a { 
+    color: var(--spa-pink-glow) !important; 
+    font-weight: 700; 
+    cursor: pointer; 
+    text-decoration: underline; 
+}
+/* ==========================================================================
+   💆 PART 4: PREMIUM TRANSPARENT PINK CARDS & ACCORDION DROPDOWNS
+   ========================================================================== */
+.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 20px; }
+
+.card {
+    background: linear-gradient(135deg, rgba(194, 24, 91, 0.80), rgba(58, 34, 41, 0.90)) !important; 
+    padding: 25px; border-radius: 20px; 
+    border-top: 5px solid var(--spa-pink-glow) !important; 
+    position: relative; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 10px 32px rgba(58, 34, 41, 0.25); 
+    border: 1px solid var(--border-glass-glow);
+    color: white; 
+    transition: 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); 
+    text-align: left;
+}
+
+.card:hover { transform: translateY(-6px); box-shadow: 0 14px 28px rgba(194, 24, 91, 0.35); }
+.card h3 { color: var(--spa-pink-glow) !important; margin-bottom: 10px; font-size: 20px; }
+.card p { color: rgba(255, 255, 255, 0.85); font-size: 14px; line-height: 1.5; }
+.promo-card { border-top-color: var(--spa-pink-glow) !important; }
+.gold-text { color: var(--spa-pink-glow); font-weight: bold; }
+
+/* 🌟 DYNAMIC FAQ ACCORDION DROPDOWNS USING DETAILS HOOK */
+details {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid var(--border-glass-glow);
+    border-left: 4px solid var(--spa-magenta);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 12px;
+    color: var(--text-mint-cream);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+details:hover { background: rgba(255, 255, 255, 0.12); }
+summary { font-weight: 600; outline: none; }
+/* ==========================================================================
+   🛡 PART 5: DATA CONTROL TABLES, OVERLAYS & ACTION MANAGEMENT BUTTONS
+   ========================================================================== */
+.crud-container { background: rgba(255, 255, 255, 0.96); padding: 30px; border-radius: 24px; box-shadow: 0 15px 40px rgba(0,0,0,0.15); overflow-x: auto; }
+.crud-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 15px; flex-wrap: wrap; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 14px; background: white; border-radius: 12px; overflow: hidden; }
+th, td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #eee; color: var(--text-dark-slate); }
+th { background-color: var(--spa-magenta) !important; color: white; font-weight: 600; }
+tr:hover { background-color: #fff8f9; } /* Translucent Pinkish shading table guide */
+
+.btn-add { background-color: #2e7d32; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.btn-add:hover { background-color: #1b5e20; transform: translateY(-1px); }
+.btn-gen { background-color: var(--spa-magenta); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.2s; }
+.btn-gen:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(194, 24, 91, 0.3); }
+.btn-edit { background-color: #1565c0; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.btn-delete { background-color: #c62828; color: white; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+.btn-delete:hover { background-color: #b71c1c; }
+.db-status { font-weight: bold; color: var(--spa-magenta); background: #ffe4ec; padding: 8px 18px; border-radius: 20px; font-size: 13px; }
+
+/* POPUP MODAL DIALOGS BOXES SYSTEM */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(58, 34, 41, 0.5); 
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modal-box {
+    background: white;
+    padding: 30px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 380px;
+    text-align: center;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--text-dark-slate);
+    animation: smoothFade 0.3s ease-in-out;
+}
+/* ==========================================================================
+   🎥 PART 6: 9:16 VERTICAL REELS CONTAINER & SIDE-BY-SIDE MOBILE ENGINE
+   ========================================================================== */
+.home-flex-container {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 40px !important;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.home-video-wrapper.reels-mode {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 300px !important; 
+    height: 480px !important;    
+    border-radius: 24px !important;
+    overflow: hidden !important;
+    box-shadow: 0 15px 35px rgba(58, 34, 41, 0.25);
+    border: 3px solid rgba(255, 255, 255, 0.4);
+    flex-shrink: 0 !important; 
+}
+
+.home-bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover !important; 
+    transition: opacity 0.4s ease-in-out !important;
+}
+
+.home-hero-card.reels-side-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 228, 236, 0.90)) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    flex-grow: 1 !important;
+    max-width: 650px;
+    padding: 45px;
+    border-radius: 24px;
+    text-align: left !important; 
+    box-shadow: 0 12px 30px rgba(194, 24, 91, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.home-title {
+    color: #2D1F23 !important; 
+    font-size: 36px !important; 
+    font-weight: 700 !important;
+    margin-bottom: 20px !important;
+}
+
+.home-subtitle {
+    color: #4a3238 !important; 
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+    margin-bottom: 30px !important;
+}
+
+.home-cta-container {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-start !important; 
+}
+
+.slider-btn {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background: rgba(58, 34, 41, 0.65) !important;
+    color: white !important;
+    border: none !important;
+    padding: 10px 14px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+    border-radius: 50% !important;
+    z-index: 10 !important;
+    transition: background 0.2s ease !important;
+}
+
+.slider-btn:hover { background: var(--spa-magenta) !important; }
+.slider-btn.prev { left: 10px !important; }
+.slider-btn.next { right: 10px !important; }
+
+/* 📱 ADAPTIVE MOBILE LAYOUT ENGINE */
+@media (max-width: 850px) {
+    .home-flex-container {
+        flex-direction: column !important;
+        gap: 30px !important;
+    }
+    .home-hero-card.reels-side-card { text-align: center !important; }
+    .home-cta-container { justify-content: center !important; }
+}

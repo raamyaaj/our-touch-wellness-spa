@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our TOUCH Wellness SPA - Customer Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <!-- ==========================================================================
+       1. NAVIGATION BAR (May Clickable Logo, Pangalan, at Lower-Panel Links)
+       ========================================================================== -->
+    <nav>
+        <a href="https://facebook.com" target="_blank" style="text-decoration: none;">
+            <div class="logo" style="cursor: pointer;">
+                <img src="images/logo.png" alt="Spa Logo" class="nav-logo-img">
+                <div>
+                    Our TOUCH <span>Wellness SPA</span>
+                </div>
+            </div>
+        </a>
+
+        <ul class="nav-links">
+            <!-- 🚀 ANG MGA PINDUTAN: Nakakonekta sa showUserTab para mag-load agad sa ibaba -->
+            <li><a id="nav-home" class="active" onclick="showUserTab('user-home-content')">🏠 Home</a></li>
+            <li><a id="nav-serv" onclick="showUserTab('user-services-section')">💆 Services</a></li>
+            <li><a id="nav-promo" onclick="showUserTab('user-promos-section')">🎟️ Promos</a></li>
+            <li><a id="nav-book" onclick="showUserTab('user-booking-section')">📅 Book Appointment</a></li>
+			<!-- TAMA AT SECURED: May kasamang custom confirmation modal filter bago mag-log out -->
+			<li>
+			    <a href="#" onclick="confirmUserLogout(event)" style="color: #c62828 !important; font-weight: 700;">
+			        🚪 Log Out
+			    </a>
+			</li>
+
+        </ul>
+    </nav>
+
+	<!-- SYSTEM ALERTS / CONFIRMATION NOTIFICATION MODAL CONTAINER -->
+	<div id="system-modal" class="modal-overlay" style="display: none;">
+	    <div class="modal-box">
+	        <div id="sys-modal-icon">✨</div>
+	        <h3 id="sys-modal-title">Notification</h3>
+	        <p id="sys-modal-text">Mensahe dito...</p>
+	        
+	        <!-- 🚀 TAMA: May magkatabing OK at CANCEL buttons para sa confirmation prompts -->
+	        <div style="display: flex; gap: 10px; justify-content: center; margin-top: 20px;">
+	            <button id="sys-modal-ok-btn" class="form-btn" style="margin: 0; width: 110px;">OK</button>
+	            <button id="sys-modal-cancel-btn" class="btn-delete" style="margin: 0; width: 110px; background-color: #757575;">Cancel</button>
+	        </div>
+	    </div>
+	</div>
+
+	<!-- ==========================================================================
+	   2. MAIN DASHBOARD CONTENT SYSTEM LAYER (Upper Permanent Panel)
+	   ========================================================================== -->
+	<div class="crud-container" style="max-width: 1050px; margin: 30px auto; padding: 25px;">
+	    <div class="crud-header">
+	        <h2>💆 Welcome sa Our TOUCH Wellness SPA Dashboard!</h2>
+	        <div class="db-status" id="user-welcome-text">Logged in as Client</div>
+	    </div>
+	    
+	    <hr style="border: 1px solid rgba(0,0,0,0.05); margin: 20px 0;">
+		
+		<!-- 🎥 PERMANENT UPPER DECK (Laging nakikita sa screen ng user) -->
+		<div id="permanent-home-top" style="display: block; padding-bottom: 10px;">
+		    
+		    <div class="home-flex-container">
+		        
+		        <!-- 🎥 SECTION A: VERTICAL REELS SCREEN CANVAS SLIDER WIDGET -->
+		        <div class="home-video-wrapper reels-mode">
+		            <video id="slider-video" autoplay loop muted playsinline class="home-bg-video">
+		                <source id="video-source" src="images/vid1.mp4" type="video/mp4">
+		                Your browser does not support the video tag.
+		            </video>
+		            <button type="button" class="slider-btn prev" onclick="changeVideo(-1)">❮</button>
+		            <button type="button" class="slider-btn next" onclick="changeVideo(1)">❯</button>
+		        </div>
+
+		        <!-- 📦 SECTION B: PREMIUM CLEAR TEXT HERO CARD WITH OPERATING HOURS INDICATOR -->
+		        <div class="home-hero-card reels-side-card">
+		            <!-- LIVE OPERATING HOURS DOT -->
+		            <div style="background: rgba(46, 125, 50, 0.1); border: 1px solid #2e7d32; padding: 10px 16px; border-radius: 50px; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px;">
+		                <span style="width: 10px; height: 10px; background: #2e7d32; border-radius: 50%; display: inline-block; animation: blink 1.5s infinite;"></span>
+		                <span style="color: #2e7d32; font-weight: bold; font-size: 13px;">
+		                    🟢 We are Open Today (1:00 PM - 11:00 PM Slots Available)
+		                </span>
+		            </div>
+		            
+		            <h2 class="home-title">Our TOUCH Wellness SPA</h2>
+		            <p class="home-subtitle">
+		                Experience the ultimate relaxation and premium body wellness treat tailored just for you. 
+		                Explore our premium massage services, active voucher promo tracks, and secure your slot today!
+		            </p>
+		            
+		            <div class="home-cta-container">
+		                <button type="button" class="btn-gen" onclick="showUserTab('user-services-section')">💆 View Spa Menu</button>
+		                <button type="button" class="form-btn" style="width: auto; padding: 10px 25px;" onclick="showUserTab('user-booking-section')">📅 Book Now</button>
+		            </div>
+		        </div>
+		    </div>
+
+		    <!-- 🌟 SECTION C: BEST SELLERS PORTFOLIO GRID -->
+		    <div style="margin-top: 50px; text-align: center; width: 100%;">
+		        <h3 style="color: var(--spa-magenta); font-size: 24px; margin-bottom: 25px; font-weight: 700;">✨ Our Best Sellers</h3>
+		        <div style="display: flex; gap: 25px; justify-content: center; flex-wrap: wrap;">
+		            <div style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); padding: 20px; border-radius: 20px; width: 220px; box-shadow: 0 8px 20px rgba(58, 34, 41, 0.05); text-align: center; border: 1px solid rgba(255,255,255,0.5);">
+		                <img src="images/ventusa.png" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%; border: 2px solid var(--spa-gold);" alt="Ventusa">
+		                <h4 style="font-size: 16px; margin-top: 12px; color: var(--spa-dark); font-weight: 700;">Premium Ventusa</h4>
+		                <p style="font-size: 12px; color: #666; margin-top: 5px;">Deep tissue traditional cupping therapy.</p>
+		            </div>
+		            <div style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); padding: 20px; border-radius: 20px; width: 220px; box-shadow: 0 8px 20px rgba(58, 34, 41, 0.05); text-align: center; border: 1px solid rgba(255,255,255,0.5);">
+		                <img src="images/hilot.png" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%; border: 2px solid var(--spa-gold);" alt="Hilot">
+		                <h4 style="font-size: 16px; margin-top: 12px; color: var(--spa-dark); font-weight: 700;">Traditional Hilot</h4>
+		                <p style="font-size: 12px; color: #666; margin-top: 5px;">Authentic Filipino healing massage.</p>
+		            </div>
+		            <div style="background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(5px); padding: 20px; border-radius: 20px; width: 220px; box-shadow: 0 8px 20px rgba(58, 34, 41, 0.05); text-align: center; border: 1px solid rgba(255,255,255,0.5);">
+		                <img src="images/thai.png" style="width: 70px; height: 70px; object-fit: cover; border-radius: 50%; border: 2px solid var(--spa-gold);" alt="Thai">
+		                <h4 style="font-size: 16px; margin-top: 12px; color: var(--spa-dark); font-weight: 700;">Thai Stretching</h4>
+		                <p style="font-size: 12px; color: #666; margin-top: 5px;">Invigorating muscle-release stretches.</p>
+		            </div>
+		        </div>
+		    </div>
+
+		    <!-- 💬 SECTION D: CUSTOMER REVIEWS SLIDER -->
+		    <div style="max-width: 750px; margin: 50px auto 0 auto; background: linear-gradient(135deg, rgba(255,255,255,0.85), rgba(255, 228, 236, 0.5)); backdrop-filter: blur(5px); padding: 25px 35px; border-radius: 24px; text-align: center; border: 1px solid rgba(255,255,255,0.5); box-shadow: 0 10px 25px rgba(194, 24, 91, 0.03);">
+		        <span style="font-size: 24px; color: var(--spa-gold); display: block; margin-bottom: 5px;">“</span>
+		        <p style="font-style: italic; color: #4a3238; font-size: 15px; line-height: 1.6; font-weight: 500;">
+		            "The best massage experience in town! The Early Bird promo track is super worth it, the ambient music is highly relaxing, and the spa staff are incredibly skilled and accommodating."
+		        </p>
+		        <h5 style="margin-top: 12px; color: var(--spa-magenta); font-weight: 700; font-size: 13px; letter-spacing: 1px;">⭐⭐⭐⭐⭐ &nbsp;•&nbsp; SARAH JANE C.</h5>
+		    </div>
+		</div> <!-- Pang-sara ng permanent-home-top -->
+		<!-- ==========================================================================
+			     🚀 3. THE DYNAMIC LOWER PANEL SYSTEM LAYER (Awtomatikong lilitaw rito)
+			     ========================================================================== -->
+			<div id="dynamic-bottom-panel" style="margin-top: 30px; border-top: 2px dashed rgba(194, 24, 91, 0.15); padding-top: 30px; width: 100%;">
+			    
+			    <!-- DEFAULT NOTIFICATION TRACK VIEW PANEL -->
+			    <div id="user-home-content" class="spa-tab" style="display: block; text-align: center; color: #888; font-style: italic; padding: 20px;">
+			        💡 Pumili ng kategorya sa navigation menu sa itaas para mag-load ang mga pagpipilian dito sa ibaba...
+			    </div>
+
+			    <!-- TAB A: SERVICES MENU CATALOG GALLERY -->
+			    <div id="user-services-section" class="spa-tab" style="display: none; width: 100%;">
+			        <h2 style="text-align:center; color:var(--spa-magenta); margin-bottom:25px; font-weight:700;">Our Relaxation Menu</h2>
+			        <div id="user-services-list" class="grid-container">Loading menu data packages...</div>
+			    </div>
+
+			    <!-- TAB B: PROMOS & VOUCHER SPECIAL OFFERS -->
+			    <div id="user-promos-section" class="spa-tab" style="display: none; width: 100%;">
+			        <h2 style="text-align:center; color:var(--spa-magenta); margin-bottom:25px; font-weight:700;">Special Packages & Vouchers</h2>
+			        <div id="user-promos-list" class="grid-container">Loading active deals...</div>
+			    </div>
+
+			    <!-- TAB C: CUSTOMER APPOINTMENT BOOKING FORM -->
+			    <div id="user-booking-section" class="spa-tab" style="display: none; justify-content: center; width: 100%;">
+			        <div class="form-container" style="max-width: 550px; width: 100%; padding: 35px; border-radius: 24px;">
+			            <h2 style="color: var(--spa-pink);">Fill Up Appointment Form</h2>
+			            
+			            <form id="customerBookingForm">
+			                <div class="form-group">
+			                    <label>Full Name</label>
+			                    <input type="text" id="cust-book-name" placeholder="I-type ang iyong buong pangalan" required>
+			                </div>
+			                <div class="form-group">
+			                    <label>Appointment Date</label>
+			                    <input type="date" id="cust-book-date" required>
+			                </div>
+			                <div class="form-group">
+			                    <label>Available Time Slot (1:00 PM - 11:00 PM)</label>
+			                    <select id="cust-book-time" required>
+			                        <option value="13:00">01:00 PM</option>
+			                        <option value="14:00">02:00 PM</option>
+			                        <option value="15:00">03:00 PM</option>
+			                        <option value="16:00">04:00 PM</option>
+			                        <option value="17:00">05:00 PM</option>
+			                        <option value="18:00">06:00 PM</option>
+			                        <option value="19:00">07:00 PM</option>
+			                        <option value="20:00">08:00 PM</option>
+			                        <option value="21:00">09:00 PM</option>
+			                        <option value="22:00">10:00 PM</option>
+			                        <option value="23:00">11:00 PM</option>
+			                    </select>
+			                </div>
+			                <div class="form-group">
+			                    <label>Select Massage / Service Package</label>
+			                    <select id="cust-serv-type" class="form-group" required>
+			                        <!-- Awtomatikong pinupunan ng script.js galing MySQL -->
+			                    </select>
+			                </div>
+							<div class="form-group">
+							    <label>Voucher Promo Track</label>
+							    <!-- 🚀 TAMA: Ginawa nating select dropdown para magkasya ang mga dynamic options mula sa Java -->
+							    <select id="cust-promo-type" class="form-group" style="width: 100%; padding: 13px; border-radius: 10px;">
+							        <option value="Regular Rate">Regular Rate</option>
+							    </select>
+							    
+							    <div id="promo-notice-box" style="margin-top: 15px; padding: 12px; background-color: rgba(255, 193, 7, 0.15); border-left: 5px solid #ffc107; border-radius: 8px; font-size: 13px; color: #fff; text-align: left;">
+							        📌 <b>Promo Mechanics Notice:</b><br>
+							        • Kung <b>Couple Package Disc.</b> ang napili, ang rate ay magiging fixed <b>₱1,200</b>.<br>
+							        • Kung <b>Early Bird (1PM - 5PM)</b> naman, may automatic discount na <b>₱50</b>.<br>
+							        <span style="display: block; margin-top: 5px; font-weight: bold; color: var(--spa-pink);">
+							            ⚠️ Paalala: Ang mechanics ay susuriin at i-veverify pa ng spa staff pagdating mo sa shop upang matiyak kung pasok ang iyong schedule.
+							        </span>
+							    </div>
+							</div>
+			                <button type="submit" class="form-btn" style="margin-top: 10px;">Confirm & Book Now</button>
+			            </form>
+			        </div>
+			    </div>
+
+			</div> <!-- Pang-sara ng dynamic-bottom-panel -->
+		</div> <!-- Pang-sara ng main-layout crud-container wrapper -->
+		<!-- ==========================================================================
+		       4. DIGITAL RECEIPT MODAL OVERLAY & SCRIPT LOADER
+		       ========================================================================== -->
+		    <div id="receipt-modal" class="modal-overlay" style="display: none;">
+		        <div class="modal-box" style="max-width: 420px; background: white; border-radius: 24px; padding: 30px; text-align: center; color: var(--spa-dark);">
+		            <div style="font-size: 45px; color: #2e7d32; margin-bottom: 10px;">🧾</div>
+		            <h3 style="font-size: 22px; font-weight: 700; color: var(--spa-magenta);">Appointment Receipt</h3>
+		            <span style="background: #e8f5e9; color: #2e7d32; font-weight: bold; padding: 4px 12px; border-radius: 20px; font-size: 12px; display: inline-block; margin-top: 5px;">STATUS: ACTIVE / UNPAID</span>
+		            
+		            <div style="background: #fff8f9; padding: 20px; border-radius: 16px; margin: 20px 0; text-align: left; font-size: 14px; border: 1px solid #ffe4ec; line-height: 1.8;">
+		                <p><b>Booking Reference:</b> <span id="rec-id" style="color:var(--spa-magenta); font-weight:700;">#001</span></p>
+		                <p><b>Client Username:</b> <span id="rec-name" style="font-weight:600;">-</span></p>
+		                <p><b>Schedule Date:</b> <span id="rec-date">-</span></p>
+		                <p><b>Availed Package:</b> <span id="rec-service">-</span></p>
+		                <p><b>Voucher Applied:</b> <span id="rec-promo" style="color:var(--spa-gold); font-weight:600;">-</span></p>
+		                <hr style="border:0; border-top:1px dashed #ddd; margin:10px 0;">
+		                <p style="font-size:16px;"><b>Total Price Due:</b> <span id="rec-total" style="color:#2e7d32; font-weight:700; font-size:18px;">₱0.00</span></p>
+		            </div>
+		            <button type="button" class="form-btn" onclick="document.getElementById('receipt-modal').style.display='none'; showUserTab('user-home-content');" style="background: var(--spa-dark);">Close & Back to Dashboard</button>
+		        </div>
+		    </div>
+
+		    <!-- CONNECTION FILE POINTER TO CUSTOM REELS SLIDER LOGIC ROOT -->
+		    <script src="/js/script.js"></script>
+		</body>
+		</html>
+
+		<!-- 💡 CSS ANIMATION FOR THE OPERATING HOURS BLINKING DOT -->
+		<style>
+		@keyframes blink { 
+		    0% { opacity: 0.3; transform: scale(0.95); } 
+		    50% { opacity: 1; transform: scale(1.05); } 
+		    100% { opacity: 0.3; transform: scale(0.95); } 
+		}
+		</style>
