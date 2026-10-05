@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "javac -cp .:Referenced Libraries/mysql-connector-j-26.7.0.jar src/com/spa/*.java && java -cp .:Referenced Libraries/mysql-connector-j-26.7.0.jar:src com.spa.SpaServer"
+    "startCommand": "javac -cp .:\"Referenced Libraries/mysql-connector-j-26.7.0.jar\" src/com/spa/*.java && java -cp .:\"Referenced Libraries/mysql-connector-j-26.7.0.jar\":src com.spa.SpaServer"
   }
 }
